@@ -1,0 +1,61 @@
+{{define "layout"}}
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Title}}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            light: '#3b82f6', 
+                            dark: '#1e40af', 
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+  <script>
+    if (localStorage.theme === 'dark' ||
+        (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  </script>
+</head>
+<body class="bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-200 min-h-screen flex flex-col">
+
+  {{template "header" .}}
+
+  <div class="flex flex-1 pt-16">
+    {{template "sidebar" .}}
+    <main class="flex-1 p-6">
+      {{block "content" .}}{{end}}
+    </main>
+  </div>
+
+  {{template "footer" .}}
+
+  <!-- Toggle theme button handler -->
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement
+      if (html.classList.contains('dark')) {
+        html.classList.remove('dark')
+        localStorage.theme = 'light'
+      } else {
+        html.classList.add('dark')
+        localStorage.theme = 'dark'
+      }
+    }
+  </script>
+</body>
+</html>
+{{end}}

@@ -1,0 +1,17 @@
+info:
+  contact: {}
+paths:
+  /v1/product:
+    get:
+      consumes:
+      - application/json
+      description: Product
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Product
+      tags:
+      - Product
+swagger: "2.0"

@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+  <title>{{.Title}}</title>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/styles/default.min.css">
+  <link rel="stylesheet" href="../../assets/vendor/fonts/fontawesome.css" />
+  <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/highlight.min.js"></script>
+  <script defer src="{{.BaseUrl}}/assets/js/rapidoc-min.js"></script></head>
+</head>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const docEl = document.getElementById('thedoc');
+    docEl.addEventListener('before-try', (e) => {
+      e.detail.request.headers.append('AAA-BBB', 'CCC DDDD');
+    });
+  });
+</script>
+<style>
+  .btn {
+  width: 90px;
+  height: 32px;
+  padding: 2px;
+  font-size: 13px;
+  background-color: DodgerBlue;
+  color: #fff;
+  border: none;
+  margin: 0 2px;
+  border-radius: 2px;
+  cursor: pointer;
+  outline: none;
+}
+  .btn.medium {
+  width: 75px;
+  height: 28px;
+}
+
+.mt-0 {
+  margin-top: 0px !important;
+}
+
+.mt-2 {
+  margin-top: 1rem !important;
+}
+table {
+  border: 1px solid #5e5e5e;
+}
+table thead {
+  background-color: #321c2d;
+  color: #fae4f5;
+}
+table tr:nth-child(2n) {
+  background: #a7a6a6;
+}
+table td {
+  font-size: var(--font-size-regular);
+  padding: 0px 5px;
+}
+a {
+  text-decoration: none;
+  color: #f76b39;
+}
+b {
+  font-size: var(--font-size-regular);
+}
+th {
+  font-size: var(--font-size-regular);
+}
+</style>
+<body>
+
+<rapi-doc 
+  server-url = "{{.BaseUrl}}"
+  spec-url = "{{.BaseUrl}}/swagger/doc.json" 
+  id="thedoc" 
+  theme = "light"
+  primary-color ="#7a7a7a"
+  bg-color = "#fae4f5"
+  render-style = "read" 
+  show-header="false"
+  schema-style="table"
+  show-method-in-nav-bar = "as-colored-block"
+  use-path-in-nav-bar = "true"
+  show-components = "true"
+  show-info = "true"
+  allow-search = "true"  
+  allow-advanced-search = "true"
+  allow-spec-url-load="false"
+  allow-spec-file-download="false"
+  allow-server-selection = "false"
+  allow-authentication	= "true"
+  update-route="false"
+  match-type="regex"
+  persist-auth="true"
+>
+<div slot="nav-logo">
+  <div style="text-align: center; padding: 0 0 8px 0; color:#47AFE8"> Navigation Style </div>
+  <div style="width:100%; display: flex;justify-content: center;">
+    <button class='btn medium' onclick="document.getElementById('thedoc').setAttribute('use-path-in-nav-bar', 'true')" >Path</button>
+    <button class='btn medium' onclick="document.getElementById('thedoc').setAttribute('use-path-in-nav-bar', 'false')" >Summary</button>
+  </div>
+</div>
+<div slot="overview">
+  <div class="input-container">
+    <input title="input" type="text" id="myInput" value="{{.BaseUrl}}/swagger/doc.json" style="display: none;">
+    <button onclick="copyText()" title="btn" class="btn medium" style="width: 150px;">
+        <i class="fas fa-copy"></i> Copy Docs Url
+    </button>
+  </div>
+</div>
+<div slot="post-/v2/hub/locver">
+  <div>
+    Below is the result classification for Location Verification result 
+    <div class="mt-2">
+      <table>
+        <thead>
+        <tr>
+          <th colspan="2" style="padding: 4px">INDOSAT OOREDOO HUTCHISON</th>
+        </tr>
+        <tr>
+          <th>Score</th>
+          <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Less than 0.5 km</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>0.5 - 1 km</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>1 - 2 km</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>2 - 5 km</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>5 - 10 km</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>10 - 50 km</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>More than 50 km</td>
+          </tr>
+      </table>
+    </div>
+    <div class="mt-2">
+      <table>
+        <thead>
+        <tr>
+          <th colspan="2" style="padding: 4px">TELKOMSEL</th>
+        </tr>
+        <tr>
+          <th>Score</th>
+          <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>0 - 250 meter</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>251 - 500 meter</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>501 - 750 meter</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>751 meter - 1 km</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>1,001 meter - 2 km</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>2,001 meter - 4 km</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>>4 km</td>
+          </tr>
+      </table>
+    </div>
+    <div class="mt-2">
+      <table>
+        <thead>
+        <tr>
+          <th colspan="2" style="padding: 4px">XLAXIATA</th>
+        </tr>
+        <tr>
+          <th>Score</th>
+          <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>0 - 250 meter</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>251 - 500 meter</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>501 - 750 meter</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>751 meter - 1 km</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>1,001 meter - 2 km</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>2,001 meter - 4 km</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>>4 km</td>
+          </tr>
+      </table>
+    </div>
+  </div>
+</div>
+<div slot="post-/v2/hub/nik_match">
+  <div>
+    Below is the result classification for NIK Matching Verification result 
+    <div class="mt-2">
+      <table>
+        <thead>
+          <tr>
+            <th colspan="2" style="padding: 4px; text-align: center;">Match and Mismatch Cases</th>
+          </tr>
+          <tr>
+            <th >Case</th>
+            <th >Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Match, NIK only registered to 1 MSISDN</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Match, NIK registered to more than 1 MSISDN</td>
+          </tr>
+          <tr>
+            <td>3:01</td>
+            <td>Not Match, NIK Exist in db, MSISDN Exist in DB</td>
+          </tr>
+          <tr>
+            <td>3:02</td>
+            <td>Not Match, NIK Exist in db, MSISDN not Exist in DB</td>
+          </tr>
+          <tr>
+            <td>3:03</td>
+            <td>Not Match, NIK not Exist in db, MSISDN Exist in DB</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Not Match, Both MSISDN and NIK not exist/active</td>
+          </tr>
+          <tr>
+            <td>0</td>
+            <td>Not Match, information is kept confidential by the provider</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div slot="post-/v2/hub/npwp_score">
+  <div>
+    Below is the result classification for NPWP Score result 
+    <div class="mt-2">
+      <table >
+        <thead>
+          <tr>
+            <th colspan="3" style="padding: 4px; text-align: center;">Tax Percentages</th>
+          </tr>
+          <tr>
+            <th >Score</th>
+            <th >Percentage</th>
+            <th >Taxable Income Range</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td >E</td>
+            <td >5%</td>
+            <td >Untuk penghasilan kena pajak hingga Rp60.000.000 per tahun</td>
+          </tr>
+          <tr>
+            <td >D</td>
+            <td >15%</td>
+            <td >Untuk penghasilan kena pajak Rp60.000.000 sampai dengan Rp250.000.000 per tahun</td>
+          </tr>
+          <tr>
+            <td >C</td>
+            <td >25%</td>
+            <td >Untuk penghasilan kena pajak Rp250.000.000 sampai dengan Rp500.000.000 per tahun</td>
+          </tr>
+          <tr>
+            <td >B</td>
+            <td >30%</td>
+            <td >Untuk penghasilan kena pajak di atas Rp500.000.000 sampai dengan Rp5.000.000.000 per tahun</td>
+          </tr>
+          <tr>
+            <td >A</td>
+            <td >35%</td>
+            <td >Untuk penghasilan kena pajak di atas Rp5.000.000.000</td>
+          </tr>
+        </tbody>
+      </table>
+      
+    </div>
+  </div>
+</div>
+<div slot="post-/v2/hub/tenure">
+  <div>
+    Below is the result of Tenure Score 
+    <div class="mt-2">
+      <table >
+        <thead>
+          <tr>
+            <th colspan="2" style="padding: 4px; text-align: center;">Indosat Tenure Calssification</th>
+          </tr>
+          <tr>
+            <th >Score</th>
+            <th >Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td >1</td>
+            <td >Age ≤ 30d</td>
+          </tr>
+          <tr>
+            <td >2</td>
+            <td >30d &lt; Age ≤ 90d</td>
+          </tr>
+          <tr>
+            <td >3</td>
+            <td >90d &lt; Age ≤ 180d</td>
+          </tr>
+          <tr>
+            <td >4</td>
+            <td >180d &lt; Age ≤ 365d</td>
+          </tr>
+          <tr>
+            <td >5</td>
+            <td >Age &gt; 365d</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      
+    </div>
+    <div class="mt-2">
+      <table >
+        <thead>
+          <tr>
+            <th colspan="2" style="padding: 4px; text-align: center;">XlAxiata Tenure Calssification</th>
+          </tr>
+          <tr>
+            <th >Score</th>
+            <th >Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td >1</td>
+            <td >Less than 3 Month (<= 89 days)</td>
+          </tr>
+          <tr>
+            <td >2</td>
+            <td >3 - 6 Months (90 days < D <= 179 days)</td>
+          </tr>
+          <tr>
+            <td >3</td>
+            <td >6 - 12 Months (180 days < D <= 364 days)</td>
+          </tr>
+          <tr>
+            <td >4</td>
+            <td >1 - 2 Year (180 days < D <= 729 days)</td>
+          </tr>
+          <tr>
+            <td >5</td>
+            <td >2 - 3 Year (730 days < D <= 1079 days)</td>
+          </tr>
+          <tr>
+            <td >6</td>
+            <td >3 - 5 Year (1080 days < D <= 1800 days)</td>
+          </tr>
+          <tr>
+            <td >7</td>
+            <td >> 5 Year (> 1800 days)</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      
+    </div>
+  </div>
+</div>
+<div slot="post-/v2/hub/ses">
+  <div>
+    Below is the result of SES Score 
+    <div class="mt-2">
+      <img src="../assets/img/ses.jpeg" alt="ses" width="100%" height="auto">
+    </div>
+  </div>
+</div>
+</rapi-doc>
+<script>
+  function copyText() {
+      // Get the text field
+      var copyText = document.getElementById("myInput");
+
+      // Select the text field
+      copyText.select();
+      copyText.setSelectionRange(0, 99999); // For mobile devices
+
+      // Copy the text inside the text field
+      navigator.clipboard.writeText(copyText.value).then(function() {
+          // Alert the copied text
+          alert("Copied the text: " + copyText.value);
+      }).catch(function(error) {
+          alert("Failed to copy text: " + error);
+      });
+  }
+</script>
+</body>
+
+</html>
