@@ -1,15 +1,22 @@
 package controllers
 
 import (
+	"bytes"
 	"echo-fullstack/config"
 	"io"
 	"net/http"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"text/template"
 
 	"github.com/labstack/echo/v4"
+	"github.com/tdewolff/minify/v2"
+	"github.com/tdewolff/minify/v2/css"
+	"github.com/tdewolff/minify/v2/html"
+	"github.com/tdewolff/minify/v2/js"
+	"github.com/tdewolff/minify/v2/svg"
 )
 
 func CatchAll(c echo.Context) error {
@@ -44,10 +51,9 @@ func CatchAll(c echo.Context) error {
 }
 
 func renderWithLayout(w io.Writer, layoutPath, viewPath string, data map[string]interface{}) error {
-	// Start with a new template
 	tmpl := template.New("page")
 
-	// 1. Load all components (partials)
+	// Load all components
 	err := filepath.Walk(filepath.Join(config.RootPath(), "views", "components"), func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
@@ -66,7 +72,7 @@ func renderWithLayout(w io.Writer, layoutPath, viewPath string, data map[string]
 		return err
 	}
 
-	// 2. Load layout and view contents
+	// Load layout and view
 	layoutContent, err := os.ReadFile(layoutPath)
 	if err != nil {
 		return err
@@ -76,12 +82,36 @@ func renderWithLayout(w io.Writer, layoutPath, viewPath string, data map[string]
 		return err
 	}
 
-	// 3. Parse combined layout + view
+	// Parse the combined template
 	_, err = tmpl.Parse(string(layoutContent) + "\n" + string(viewContent))
 	if err != nil {
 		return err
 	}
 
-	// 4. Execute final template
-	return tmpl.Execute(w, data)
+	// Execute into a buffer
+	var buf bytes.Buffer
+	if err := tmpl.Execute(&buf, data); err != nil {
+		return err
+	}
+
+	output := buf.String()
+
+	// Minify HTML output if in production
+	if os.Getenv("APP_ENV") == "PRODUCTION" {
+		m := minify.New()
+		m.AddFunc("text/html", html.Minify)
+		m.AddFunc("text/css", css.Minify)
+		m.AddFunc("image/svg+xml", svg.Minify)
+		m.AddFuncRegexp(regexp.MustCompile("^(application|text)/(x-)?(java|ecma)script$"), js.Minify)
+
+		minified, err := m.String("text/html", output)
+		if err != nil {
+			return err
+		}
+		output = minified
+	}
+
+	// Write output (minified or raw)
+	_, err = w.Write([]byte(output))
+	return err
 }
